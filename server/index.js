@@ -13,7 +13,13 @@ const io = new Server(server, {
   },
 });
 
+io.on("connection", (socket) => {
+  console.log("User Connected", socket.id);
+  socket.on("send_message", (data) => {
+    socket.broadcast.emit("recieve_message", data);
+  });
+});
 
-server.listen(3001,()=>{
-    console.log("server is running")
-})
+server.listen(3001, () => {
+  console.log("server is running");
+});
